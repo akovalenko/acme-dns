@@ -1,7 +1,11 @@
-[![Build Status](https://travis-ci.org/joohoi/acme-dns.svg?branch=master)](https://travis-ci.org/joohoi/acme-dns) [![Coverage Status](https://coveralls.io/repos/github/joohoi/acme-dns/badge.svg?branch=master)](https://coveralls.io/github/joohoi/acme-dns?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/joohoi/acme-dns)](https://goreportcard.com/report/github.com/joohoi/acme-dns)
 # acme-dns
 
 A simplified DNS server with a RESTful HTTP API to provide a simple way to automate ACME DNS challenges.
+
+## This Fork
+
+compiles with the Pure-Go sqlite driver, so it can work with sqlite
+database after building with `CGO_ENABLED=0`
 
 ## Why?
 
@@ -121,7 +125,7 @@ See the INSTALL section for information on how to do this.
 
 1) Install [Go 1.13 or newer](https://golang.org/doc/install).
 
-2) Build acme-dns: 
+2) Build acme-dns:
 ```
 git clone https://github.com/joohoi/acme-dns
 cd acme-dns
@@ -188,7 +192,7 @@ docker run --rm --name acmedns                 \
 Note: In this documentation:
 - `auth.example.org` is the hostname of the acme-dns server
 - acme-dns will serve `*.auth.example.org` records
-- `198.51.100.1` is the **public** IP address of the system running acme-dns  
+- `198.51.100.1` is the **public** IP address of the system running acme-dns
 
 These values should be changed based on your environment.
 
@@ -244,7 +248,7 @@ nsname = "auth.example.org"
 nsadmin = "admin.example.org"
 # predefined records served in addition to the TXT
 records = [
-    # domain pointing to the public IP of your acme-dns server 
+    # domain pointing to the public IP of your acme-dns server
     "auth.example.org. A 198.51.100.1",
     # specify that auth.example.org will resolve any *.auth.example.org records
     "auth.example.org. NS auth.example.org.",

@@ -11,7 +11,7 @@ import (
 
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -57,7 +57,11 @@ func getSQLiteStmt(s string) string {
 func (d *acmedb) Init(engine string, connection string) error {
 	d.Mutex.Lock()
 	defer d.Mutex.Unlock()
-	db, err := sql.Open(engine, connection)
+	driverName := engine
+	if driverName == "sqlite3" {
+		driverName = "sqlite"
+	}
+	db, err := sql.Open(driverName, connection)
 	if err != nil {
 		return err
 	}
@@ -191,7 +195,7 @@ func (d *acmedb) Register(afrom cidrslice) (ACMETxt, error) {
         Username,
         Password,
         Subdomain,
-		AllowFrom) 
+		AllowFrom)
         values($1, $2, $3, $4)`
 	if Config.Database.Engine == "sqlite3" {
 		regSQL = getSQLiteStmt(regSQL)
